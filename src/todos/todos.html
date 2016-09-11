@@ -57,14 +57,15 @@
         <button 
           ng-if="!todo.isEditing"
           class="btn btn-danger"
+          ng-click="deleteTask(todo)"
         >Delete
         </button>
         
 
         <button 
+        ng-click="updateTask(todo)"
           ng-if="todo.isEditing"
           class="btn btn-primary"
-          
         >Save
         </button>
         <button 
