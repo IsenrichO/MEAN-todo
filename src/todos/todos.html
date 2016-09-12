@@ -37,12 +37,12 @@
         >{{todo.task}}
         </span>
 
-        <form ng-submit="updateTask()">
+        <form ng-submit="updateTask(todo)">
           <input
             ng-if="todo.isEditing"
             class="form-control todo__update-input"
             ng-value="todo.task"
-            ng-model="updatedTask"
+            ng-model="todo.updatedTask"
             />
         </form>
       </td>
@@ -63,9 +63,9 @@
         
 
         <button 
-        ng-click="updateTask(todo)"
           ng-if="todo.isEditing"
           class="btn btn-primary"
+          ng-click="updateTask(todo)"
         >Save
         </button>
         <button 

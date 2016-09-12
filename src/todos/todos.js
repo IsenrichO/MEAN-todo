@@ -5,8 +5,6 @@ export default function($scope, todoFactory) {
     createHasInput: false
   };
 
-  console.log(todoFactory.createTask);
-
   $scope.todos = [
     {
       task: 'do dishes',
@@ -26,36 +24,15 @@ export default function($scope, todoFactory) {
   $scope.onEditClick = todo => {
     todo.isEditing = true;
     todo.updatedTask = todo.task;
-  }
+  };
   $scope.onCancelClick = todo => {
     todo.isEditing = false;
-  }
+  };
 
-  $scope.createTask = () => {
-    params.createHasInput = false;
-    $scope.createTaskInput = '';
-  }
+  const { createTask, updateTask, deleteTask, watchCreateTaskInput} = todoFactory;
 
-  $scope.updateTask = todo => {
-    todo.task = todo.updatedTask;
-    todo.isEditing = false;
-  }
-
-  $scope.deleteTask = todoToDelete => {
-    _.remove($scope.todos, todo => todo.task === todoToDelete.task);
-
-  }
-
-  $scope.$watch('createTaskInput', val => {
-    if( !val && params.createHasInput) {
-      $scope.todos.pop();
-      params.createHasInput = false;
-    } else if (val && !params.createHasInput) {
-      $scope.todos.push({task: val, isCompleted: false});
-      params.createHasInput = true;
-    } else if( val && params.createHasInput) {
-      $scope.todos[$scope.todos.length - 1].task = val;
-    }
-
-  });
+  $scope.createTask = _.partial(createTask, $scope, params);
+  $scope.updateTask = _.partial(updateTask);
+  $scope.deleteTask = _.partial(deleteTask, $scope)
+  $scope.$watch('createTaskInput', _.partial(watchCreateTaskInput, params, $scope));
 }
